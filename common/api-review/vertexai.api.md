@@ -413,7 +413,8 @@ export enum HarmSeverity {
     HARM_SEVERITY_HIGH = "HARM_SEVERITY_HIGH",
     HARM_SEVERITY_LOW = "HARM_SEVERITY_LOW",
     HARM_SEVERITY_MEDIUM = "HARM_SEVERITY_MEDIUM",
-    HARM_SEVERITY_NEGLIGIBLE = "HARM_SEVERITY_NEGLIGIBLE"
+    HARM_SEVERITY_NEGLIGIBLE = "HARM_SEVERITY_NEGLIGIBLE",
+    HARM_SEVERITY_UNSPECIFIED = "HARM_SEVERITY_UNSPECIFIED"
 }
 
 // @beta
@@ -627,7 +628,6 @@ export interface SafetyRating {
 export interface SafetySetting {
     // (undocumented)
     category: HarmCategory;
-    // (undocumented)
     method?: HarmBlockMethod;
     // (undocumented)
     threshold: HarmBlockThreshold;
@@ -782,6 +782,8 @@ export interface UsageMetadata {
 export interface VertexAI {
     app: FirebaseApp;
     // (undocumented)
+    developerAPIEnabled: boolean;
+    // (undocumented)
     location: string;
 }
 
@@ -806,7 +808,8 @@ export const enum VertexAIErrorCode {
     NO_PROJECT_ID = "no-project-id",
     PARSE_FAILED = "parse-failed",
     REQUEST_ERROR = "request-error",
-    RESPONSE_ERROR = "response-error"
+    RESPONSE_ERROR = "response-error",
+    UNSUPPORTED = "unsupported"
 }
 
 // @public
@@ -816,11 +819,14 @@ export abstract class VertexAIModel {
     // @internal (undocumented)
     protected _apiSettings: ApiSettings;
     readonly model: string;
-    static normalizeModelName(modelName: string): string;
-}
+    // @internal (undocumented)
+    static normalizeModelName(modelName: string, developerAPIEnabled?: boolean): string;
+    }
 
 // @public
 export interface VertexAIOptions {
+    // (undocumented)
+    developerAPIEnabled: boolean;
     // (undocumented)
     location?: string;
 }

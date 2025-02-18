@@ -18,7 +18,7 @@
 import { FirebaseApp, getApp, _getProvider } from '@firebase/app';
 import { Provider } from '@firebase/component';
 import { getModularInstance } from '@firebase/util';
-import { DEFAULT_LOCATION, VERTEX_TYPE } from './constants';
+import { VERTEX_TYPE } from './constants';
 import { VertexAIService } from './service';
 import { VertexAI, VertexAIOptions } from './public-types';
 import {
@@ -29,6 +29,7 @@ import {
 } from './types';
 import { VertexAIError } from './errors';
 import { VertexAIModel, GenerativeModel, ImagenModel } from './models';
+import { createInstanceIdentifier } from './helpers';
 
 export { ChatSession } from './methods/chat-session';
 export * from './requests/schema-builder';
@@ -57,8 +58,12 @@ export function getVertexAI(
   // Dependencies
   const vertexProvider: Provider<'vertexAI'> = _getProvider(app, VERTEX_TYPE);
 
+  const identifier = createInstanceIdentifier(
+    options?.developerAPIEnabled,
+    options?.location
+  );
   return vertexProvider.getImmediate({
-    identifier: options?.location || DEFAULT_LOCATION
+    identifier
   });
 }
 
